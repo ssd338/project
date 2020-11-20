@@ -63,7 +63,7 @@ td {
    
    <tr>
    <td class="title" height="150px">처방약품</td>
-   <td class="content"><a href="/detailMedicine?medi_no=${c.medi_no }"><button id="btn_medi">${medi_name }</button></a></td>
+   <td class="content"><a href="/detailMedicine?no=${c.medi_no }"><button id="btn_medi">${medi_name }</button></a></td>
    </tr>
    </table>
    <!-- 
