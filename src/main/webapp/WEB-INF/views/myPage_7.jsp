@@ -681,7 +681,7 @@ $(function() {
                                 <th>휴대전화<font color="orange">*</font></th>
                                 <td>
                                    <div class="table_input"><span id="table_span4">
-                                   <select class="text-2" name="tel1">
+                                   <select class="text-2" name="tel1" id="tel1">
                                     <option>010</option>
                                     <option>011</option>
                                     <option>016</option>
