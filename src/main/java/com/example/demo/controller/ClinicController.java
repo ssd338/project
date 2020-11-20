@@ -53,7 +53,7 @@ public class ClinicController {
 
    
    
- //ajax으로 진료이력 불러오기   -> listClinic에서 사용
+ //ajax으로 진료이력 불러오기   -> listClinic, myPage_1에서 사용
    @RequestMapping("/allListClinic.ajax")
    @ResponseBody
    public ArrayList allListAjax(HttpSession session,@RequestParam HashMap map) {
@@ -66,7 +66,6 @@ public class ClinicController {
       List<ClinicVo> list = clinicDao.findByNoMem(member_no);
       ArrayList list2 = new ArrayList();
       int currentPage =Integer.parseInt((String)map.get("currentPage"));   // 현재 페이지               7
-      System.out.println("현재페이지:"+currentPage);
       int dataPerPage = Integer.parseInt((String)map.get("dataPerPage"));   // 한페이지에 보여질 데이터의 수      5
       int totalData = Integer.parseInt((String)map.get("totalData"));      // 총 데이터의 수            31
        
@@ -91,40 +90,8 @@ public class ClinicController {
          map2.put("doc_name", clinicDao.selectDocName(cli_no));         //담당의
          list2.add(map2);
       }
-
         return list2;
-
-     }
-      
-   //ajax으로 진료이력 불러오기   -> myPage_1에서 사용
-   @RequestMapping("/listClinic.ajax")
-   @ResponseBody
-   public ArrayList listAjax(HttpSession session) {
-      int member_no = -1;
-      if(session.getAttribute("member_no") != null) {
-         member_no = (int)session.getAttribute("member_no");
-      }
-      
-      // 회원번호를 통해서 진료기록을 가져온다
-      List<ClinicVo> list = clinicDao.findByNoMem(member_no);
-      ArrayList list2 = new ArrayList();
-      int listSize = list.size()-5;   //최근 5개의 진료만을 보여주기 위해서
-      if(listSize<0) {
-         listSize = 0;
-      }
-      //리스트 돌면서 맵에 진료 기록(의사이름등)을 담음
-      for(int i=list.size()-1; i>=listSize; i--) {   //최근 순으로 보여주기 위해서 역순으로 배열을 돈다
-         HashMap map = new HashMap();
-         int cli_no = list.get(i).getCli_no();
-         map.put("cli_no", cli_no);                        //진료번호
-         map.put("cli_date", list.get(i).getCli_date());         //진료일
-         map.put("cli_content", list.get(i).getCli_content());   //진단내역
-         map.put("dept_name", clinicDao.selectDeptName(cli_no));      //진료과
-         map.put("doc_name", clinicDao.selectDocName(cli_no));         //담당의
-         list2.add(map);
-      }
-      return list2;
-   }
+  }
    
    //진료번호로 진료이력 상세조회
    @RequestMapping("/detailClinic")
