@@ -13,8 +13,8 @@ import com.example.demo.vo.MedicalTVVo;
 public class MedicalTVDao {
 
 	// 모든 영상목록을 가져온다
-	public List<MedicalTVVo> findAllMedicine(HashMap map) {
-		return MedicalTVManager.findAllMedicine(map);
+	public List<MedicalTVVo> findAllMedicalTV(HashMap map) {
+		return MedicalTVManager.findAllMedicalTV(map);
 	}
 	// 영상번호에 맞는 영상 정보를 가져온다
 	public MedicalTVVo findByNo(int no) {

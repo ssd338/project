@@ -26,10 +26,7 @@ public class MedicineController {
 	@Autowired
 	private MedicineDao dao;
 	
-	private int pageSIZE = 5;		// 한페이지에 보여질 약품의 수
 	private int totalRecord = 0;	// 모든 약품의 수
-	private int totalPage = 1;		// 총 페이지의 수
-	private int pageMAX = 5;		// 한화면에 보여줄수 있는 페이지의 수
 	
 	@RequestMapping("/listMedicine")				//pageNUM은 현재 페이지- 없다면 기본은 1이고 있다면 그 값을 받아오는것
 	public ModelAndView listMedicine() {

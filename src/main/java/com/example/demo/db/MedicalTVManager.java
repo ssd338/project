@@ -30,7 +30,7 @@ public class MedicalTVManager {
 	}
 	
 	// 모든 영상목록을 가져온다
-	public static List<MedicalTVVo> findAllMedicine(HashMap map) {
+	public static List<MedicalTVVo> findAllMedicalTV(HashMap map) {
 		List<MedicalTVVo> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("medicalTV.selectAll", map);

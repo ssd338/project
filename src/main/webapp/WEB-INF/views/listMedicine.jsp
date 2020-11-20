@@ -349,7 +349,20 @@ footer{
   width: 700px;
   padding: 20px;
 }
-
+ /* 다음(이전) 버튼 */
+    .btn_pn{ 
+     text-align: center;
+    background-color: #CBE2B8;
+    border: solid 3px #CBE2B8;
+    width: 50px;
+     height: 30px;
+     padding: 0 8px 0 5px;
+     margin: 0px 3px 5px 0px;
+     color: #fff;
+     font-size: 16px;
+     letter-spacing: -.8px;
+     line-height: 1.5;
+   }
 
 </style>
 <link rel="stylesheet" href="newfooter.css">
@@ -430,7 +443,7 @@ function pagingAjax(dataPerPage,currentPage,search){   //매개변수로 한페�
                                             "color":"#CBE2B8", 
                                             "font-weight":"bold"});    // 현재 페이지 표시
       }else{                        //약품이 없는 경우
-    	  $("#center").val("진료 이력이 없습니다.")
+    	  $("#center").val("검색된 약품이 없습니다.")
       } 
                                           
       $("#paging a").click(function(){         //숫자를 (a태그)를 눌렀을때 동작
@@ -454,9 +467,10 @@ function pagingAjax(dataPerPage,currentPage,search){   //매개변수로 한페�
      });
   
   $("document").ready(function(){ 								// 처음 화면 켰을때
-      paging(totalData, dataPerPage, pageCount, 1);             // 페이징버튼 메소드호출 [이전]12345[다음]
-      pagingAjax(dataPerPage,1,search);                         // 첫 화면의 레코드  한페이지에 나타낼데이터 수, 현재 선택된 페이지, 검색어 => 검색어는 "%%"
-      });
+	  pagingAjax(dataPerPage,1,search);                         // 첫 화면의 레코드  한페이지에 나타낼데이터 수, 현재 선택된 페이지, 검색어 => 검색어는 "%%"
+	  totalData = $("#cnt").val();
+	  paging(totalData, dataPerPage, pageCount, 1);             // 페이징버튼 메소드호출 [이전]12345[다음]
+	});
 
 });
 </script>
@@ -511,16 +525,6 @@ function pagingAjax(dataPerPage,currentPage,search){   //매개변수로 한페�
   	<!--약품 리스트 -->
   	<input type="hidden" value="${cnt }" id="cnt">				<!-- 약품의 수: 페이징 처리를 위해 검색어에 따라 갱신됨 -->
   		<div class="center" id="center">
-  		<!-- 
-  		<c:forEach var="medi" items="${list }">
-  		<div class="medi" style="cursor: pointer;" onclick="location.href='/detailMedicine?no=${medi.medi_no}'">
-  			<img src="./mediImg/${medi.medi_fname }">
-  			<div>
-				<p class="m_title">${medi.medi_name }</p><p class="m_detail">${medi.medi_detail}</p>
-	  		</div>
-  		</div>
-  		</c:forEach>-->
-
   		</div>
   	</div>
   	
