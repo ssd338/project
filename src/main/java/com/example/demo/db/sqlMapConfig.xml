@@ -30,11 +30,11 @@
   </environments>
   <mappers>
     <mapper resource="com/example/demo/db/DoctorMapper.xml"/>
-    <mapper resource="com/example/demo/db/Doc_ScheduleMapper.xml"/>
+<!--    <mapper resource="com/example/demo/db/Doc_ScheduleMapper.xml"/>
     <mapper resource="com/example/demo/db/Doc_EducationMapper.xml"/>
     <mapper resource="com/example/demo/db/Doc_CareerMapper.xml"/>
-<!--     <mapper resource="com/example/demo/db/AdviceMapper.xml"/> -->
-    <mapper resource="com/example/demo/db/NoticeMapper.xml"/>
+     <mapper resource="com/example/demo/db/AdviceMapper.xml"/> 
+    <mapper resource="com/example/demo/db/NoticeMapper.xml"/>-->
     <mapper resource="com/example/demo/db/MedicineMapper.xml"/>
     <mapper resource="com/example/demo/db/MedicalTVMapper.xml"/>
     <mapper resource="com/example/demo/db/MemberMapper.xml"/>

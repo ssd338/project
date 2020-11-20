@@ -5,10 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.db.BoardManager;
 import com.example.demo.db.MedicineManager;
 import com.example.demo.vo.MedicineVo;
-import com.example.demo.vo.NoticeVo;
 //약품
 @Repository
 public class MedicineDao {
