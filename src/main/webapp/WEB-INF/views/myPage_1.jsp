@@ -465,6 +465,15 @@
   span{
   	display: inline-block;
   }
+  #mypage_reserve h2{
+      padding-top: 20px;
+      height: 5px;
+   }
+   
+   #mypage_reserve h3{
+      padding-top: 20px;
+      height: 5px;
+   }
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">

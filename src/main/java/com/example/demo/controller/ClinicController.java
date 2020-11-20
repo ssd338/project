@@ -100,10 +100,12 @@ public class ClinicController {
       ClinicVo c = clinicDao.findByNoCli(cli_no);
       String Dept_name = clinicDao.selectDeptName(cli_no);      //진료과
       String Doc_name = clinicDao.selectDocName(cli_no);    //주치의
+      String Medi_name = clinicDao.selectMediName(cli_no);    //약품이름
       
       mav.addObject("c", c);
       mav.addObject("dept_name", Dept_name);
       mav.addObject("doc_name", Doc_name);
+      mav.addObject("medi_name", Medi_name);
       return mav;
    }   
    

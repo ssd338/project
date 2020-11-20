@@ -511,20 +511,14 @@ $(function(){
         var next = last+1;   //다음
         var prev = first-1;   //이전
 
-        var $pingingView = $("#paging");
-        
         var html = "";
-        
         if(prev > 0)
             html += "<a href=# id='prev'><button class='btn_pn'>이전</button></a> ";
-        
         for(var i=first; i <= last; i++){
             html += "<a href='#' id=" + i + ">" + i + "</a> ";
         }
-        
         if(last < totalPage)
             html += "<a href=# id='next'><button class='btn_pn'>다음</button></a>";
-
         if(totalData>0){                 //진료기록이 있는 경우
            $("#paging").html(html);    // 페이지 목록 생성
            $("#paging a").css("color", "black");
@@ -532,8 +526,7 @@ $(function(){
                                               "color":"#CBE2B8", 
                                               "font-weight":"bold"});    // 현재 페이지 표시
         }else{                        //진료기록이 없는 경우
-            html.val("진료 이력이 없습니다.")
-           $("#paging").html(html);      //[이전]12345[다음] 이런거 대신에 진료이력이 없다는 메세지를 표시
+        	$("#ul").html("진료 이력이 없습니다.")
         } 
 
                                             

@@ -60,6 +60,13 @@ public class ClinicManager {
       session.close();
       return a;   
    }
+ //진료번호로 환자의 약품이름 불러오기
+   public static String selectByNoMem4(int cli_no) {
+      SqlSession session = sqlSessionFactory.openSession();
+      String a = session.selectOne("clinic.selectByNoMem4",cli_no);
+      session.close();
+      return a;   
+   }
    
    //회원번호로 진료횟수 조회
    public static int cntByClinic(int member_no) {

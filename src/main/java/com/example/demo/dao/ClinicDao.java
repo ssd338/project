@@ -33,5 +33,8 @@ public class ClinicDao {
    public int cntByClinic(int member_no) {
       return ClinicManager.cntByClinic(member_no);
    }
-   
+   //<!-- 진료번호로 진료받은 약품이름 조회 -->   
+   public String selectMediName(int cli_no) {
+      return ClinicManager.selectByNoMem4(cli_no);
+   }
 }

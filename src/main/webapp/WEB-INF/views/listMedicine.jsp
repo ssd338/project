@@ -5,10 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="newfooter.css">
-<script src="https://kit.fontawesome.com/eef195c997.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="header.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 * {
   box-sizing: border-box;
@@ -356,6 +352,114 @@ footer{
 
 
 </style>
+<link rel="stylesheet" href="newfooter.css">
+<script src="https://kit.fontawesome.com/eef195c997.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="header.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+function pagingAjax(dataPerPage,currentPage,search){   //매개변수로 한페이지에 나타낼데이터 수, 현재 선택된 페이지,검색어
+    $.ajax({
+        url: "/listMedicine.ajax",
+        method: "POST",
+        data: {dataPerPage:dataPerPage,currentPage:currentPage,search:search},
+        dataType : "json",
+        async:false,
+        success: function(data) {    					  //map - MedicinVo가 담긴 list와 검색어에 따른 레코드수가 들어있는 cnt       
+			var list = data.list
+			$("#cnt").val(data.cnt)
+			
+            if(list.length>0){
+            var divlist = $("<div></div>")
+        	  $.each(list, function(idx, item){
+        		  var div = $("<div class='medi' style='cursor: pointer;'></div>")
+            	  var img = $("<img>").attr("src","./mediImg/"+item.medi_fname)
+            	  var p = $("<p class='m_title'></p>").html(item.medi_name)
+            	  var p2 = $("<p class='m_detail'></p>").html(item.medi_detail)
+            	  var div2 = $("<div></div>").append(p,p2)
+            	  var a = $("<a></a>").attr("href","/detailMedicine?no="+item.medi_no).append(img,div2);
+
+                  $(div).html(a)
+                  $(divlist).append(div)
+                  
+        	  })  
+        	$("#center").html(divlist)
+           }
+        }
+    })
+ }   
+ 
+  var totalData = $("#cnt").val();    // 총 약품 수      6
+  var dataPerPage = 5;   			  // 한 페이지에 나타낼 데이터 수
+  var pageCount = 5;        		  // 한 화면에 나타낼 페이지 수
+  var search = $("#search").val();    // 검색어
+
+ 
+  function paging(totalData, dataPerPage, pageCount, currentPage){				//페이징 번호표 [이전]12345[다음]이거 생성해주는 메소드
+      
+      var totalPage = Math.ceil(totalData/dataPerPage);    // 총 페이지 수    올림(총 약품 수 / 한페이지에 나타낼 데이터의 수)
+      var pageGroup = Math.ceil(currentPage/pageCount);    // 페이지 그룹(1번페이지면 1번 그룹, 6페이지면 2번그룹) (현재페이지/한화면에 나타낼 페이지수)
+      
+      var last = pageGroup * pageCount;    // 화면에 보여질 마지막 페이지 번호       페이지그룹/한 화면에 나타낼 페이지 수
+      if(last > totalPage)                 // 총 페이지 수보다 last가 큰 경우
+          last = totalPage;
+      
+      var first = (pageGroup * pageCount) - (pageCount-1);    // 화면에 보여질 첫번째 페이지 번호
+      if(first <1){                  // 현재 총 페이지의 수가 5보다 적으면  fist는 1
+       first = 1
+      }
+      var next = last+1;   //다음
+      var prev = first-1;   //이전
+      
+      var html = "";
+      
+      if(prev > 0)
+          html += "<a href=# id='prev'><button class='btn_pn'>이전</button></a> ";
+      
+      for(var i=first; i <= last; i++){
+          html += "<a href='#' id=" + i + ">" + i + "</a> ";
+      }
+      
+      if(last < totalPage)
+          html += "<a href=# id='next'><button class='btn_pn'>다음</button></a>";
+
+      if(totalData>0){                 //약품이 있는 경우
+         $("#paging").html(html);    // 페이지 목록 생성
+         $("#paging a").css("color", "black");
+         $("#paging a#" + currentPage).css({"text-decoration":"none", 
+                                            "color":"#CBE2B8", 
+                                            "font-weight":"bold"});    // 현재 페이지 표시
+      }else{                        //약품이 없는 경우
+    	  $("#center").val("진료 이력이 없습니다.")
+      } 
+                                          
+      $("#paging a").click(function(){         //숫자를 (a태그)를 눌렀을때 동작
+          var $item = $(this);
+          var id = $item.attr("id");
+          var selectedPage = id;
+          
+          if(id === "next")    selectedPage = next;      //다음 혹은 이전이 눌렸는지 체크
+          if(id === "prev")    selectedPage = prev;
+          pagingAjax(dataPerPage,selectedPage,search);               //페이지에 맞는 레코드를 가져오는 ajax을 호출
+          paging(totalData, dataPerPage, pageCount, selectedPage);      //밑에 페이징 번호표 [이전]12345[다음]이거 생성
+          
+      });
+  }
+
+  $("#btn").click(function(){         							// 검색 버튼을 눌렀을때
+	  search = $("#search").val();								// 검색어를 가져옴
+      pagingAjax(dataPerPage,1,search);                         // ajax으로 레코드를 가져온다(한페이지에 보여줄데이터 수(5),현재페이지,검색어)
+      totalData = $("#cnt").val();								// 검색어에 따른 데이터의 수 - ajax에서 cnt에 담아놓음
+      paging(totalData, dataPerPage, pageCount, 1);             // 페이징버튼 메소드호출
+     });
+  
+  $("document").ready(function(){ 								// 처음 화면 켰을때
+      paging(totalData, dataPerPage, pageCount, 1);             // 페이징버튼 메소드호출 [이전]12345[다음]
+      pagingAjax(dataPerPage,1,search);                         // 첫 화면의 레코드  한페이지에 나타낼데이터 수, 현재 선택된 페이지, 검색어 => 검색어는 "%%"
+      });
+
+});
+</script>
 <title>의약품목록</title>
 </head>
 
@@ -397,17 +501,17 @@ footer{
   	<div class="part_content"> 
   	
   	<!-- 검색 -->
-  	<form action="/listMedicine">
   	<div class="search">
 				<div id="ser_css">
-					<input type="text" size="40" name="search" class="searchText">
+					<input type="text" size="40" name="search" class="searchText" id="search">
 					<button id="btn">검색</button>
 				</div>
 			</div>
  
-  	</form>
   	<!--약품 리스트 -->
-  		<div class="center">
+  	<input type="hidden" value="${cnt }" id="cnt">				<!-- 약품의 수: 페이징 처리를 위해 검색어에 따라 갱신됨 -->
+  		<div class="center" id="center">
+  		<!-- 
   		<c:forEach var="medi" items="${list }">
   		<div class="medi" style="cursor: pointer;" onclick="location.href='/detailMedicine?no=${medi.medi_no}'">
   			<img src="./mediImg/${medi.medi_fname }">
@@ -415,15 +519,14 @@ footer{
 				<p class="m_title">${medi.medi_name }</p><p class="m_detail">${medi.medi_detail}</p>
 	  		</div>
   		</div>
-  		</c:forEach>
+  		</c:forEach>-->
 
   		</div>
   	</div>
   	
   	<!-- 리스트번호 -->
 	<div class="bottom">
-		<div class="div_num">
-			${pageStr }
+		<div class="div_num" id="paging">
 		</div>
 	</div>
   	
